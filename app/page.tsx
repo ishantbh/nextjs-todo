@@ -1,19 +1,15 @@
-import { Button } from "@/components/ui/button"
+import { AddTodoForm } from "@/components/forms/add-todo-form"
 
 export default function Page() {
   return (
-    <div className="flex min-h-svh p-6">
-      <div className="flex max-w-md min-w-0 flex-col gap-4 text-sm leading-loose">
-        <div>
-          <h1 className="font-medium">Project ready!</h1>
-          <p>You may now add components and start building.</p>
-          <p>We&apos;ve already added the button component for you.</p>
-          <Button className="mt-2">Button</Button>
-        </div>
-        <div className="font-mono text-xs text-muted-foreground">
-          (Press <kbd>d</kbd> to toggle dark mode)
-        </div>
-      </div>
+    <div className="min-h-svh p-4 font-mono sm:p-6">
+      <main className="mx-auto max-w-xl rounded-md bg-muted p-4 sm:p-6">
+        <h1 className="mb-4 text-center text-4xl font-bold sm:mb-6">
+          Todo App
+        </h1>
+
+        <AddTodoForm />
+      </main>
     </div>
   )
 }

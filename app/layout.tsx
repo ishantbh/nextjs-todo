@@ -1,12 +1,24 @@
-import { Geist, Geist_Mono, Source_Sans_3, JetBrains_Mono } from "next/font/google"
+import {
+  Geist,
+  Geist_Mono,
+  Source_Sans_3,
+  JetBrains_Mono,
+} from "next/font/google"
 
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils"
+import { Toaster } from "@/components/ui/sonner"
 
-const jetbrainsMonoHeading = JetBrains_Mono({subsets:['latin'],variable:'--font-heading'});
+const jetbrainsMonoHeading = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-heading",
+})
 
-const sourceSans3 = Source_Sans_3({subsets:['latin'],variable:'--font-sans'})
+const sourceSans3 = Source_Sans_3({
+  subsets: ["latin"],
+  variable: "--font-sans",
+})
 
 const fontMono = Geist_Mono({
   subsets: ["latin"],
@@ -22,10 +34,17 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={cn("antialiased", fontMono.variable, "font-sans", sourceSans3.variable, jetbrainsMonoHeading.variable)}
+      className={cn(
+        "antialiased",
+        fontMono.variable,
+        "font-sans",
+        sourceSans3.variable,
+        jetbrainsMonoHeading.variable
+      )}
     >
       <body>
         <ThemeProvider>{children}</ThemeProvider>
+        <Toaster richColors />
       </body>
     </html>
   )
