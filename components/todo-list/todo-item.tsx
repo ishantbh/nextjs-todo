@@ -1,11 +1,12 @@
 "use client"
 
+import { TodoDeleteBtn } from "@/components/todo-list/todo-delete-btn"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Field, FieldLabel } from "@/components/ui/field"
 import type { Todo } from "@/db/schema"
 import { toggleTodo } from "@/lib/actions"
 import { cn } from "@/lib/utils"
-import { useTransition } from "react"
+import { useMemo, useTransition } from "react"
 import { toast } from "sonner"
 
 type TodoItemProps = {
@@ -13,7 +14,10 @@ type TodoItemProps = {
 }
 
 export default function TodoItem({ todo }: TodoItemProps) {
-  const toggleTodoWithId = toggleTodo.bind(null, todo.id)
+  const toggleTodoWithId = useMemo(
+    () => toggleTodo.bind(null, todo.id),
+    [todo.id]
+  )
 
   const [isPending, startTransition] = useTransition()
 
@@ -32,7 +36,7 @@ export default function TodoItem({ todo }: TodoItemProps) {
   }
 
   return (
-    <li className="mx-2 my-4 rounded-sm bg-background/30">
+    <li className="mx-2 my-4 rounded-sm bg-background/30 pe-2">
       <Field orientation="horizontal">
         <Checkbox
           id={`todo-${todo.id}`}
@@ -50,6 +54,8 @@ export default function TodoItem({ todo }: TodoItemProps) {
         >
           {todo.title}
         </FieldLabel>
+
+        <TodoDeleteBtn id={todo.id} />
       </Field>
     </li>
   )

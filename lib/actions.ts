@@ -40,3 +40,18 @@ export async function toggleTodo(
     return { error: "Database Error: Failed to toggle Todo." }
   }
 }
+
+export async function deleteTodo(
+  id: string,
+  prevState: State,
+  formData: FormData
+): Promise<State> {
+  try {
+    await db.delete(todos).where(eq(todos.id, id))
+    revalidatePath("/")
+    return { message: "Todo deleted successfully" }
+  } catch (error) {
+    console.error("Database Error:", error)
+    return { error: "Database Error: Failed to delete Todo." }
+  }
+}
