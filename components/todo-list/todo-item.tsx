@@ -1,13 +1,36 @@
+"use client"
+
 import { Checkbox } from "@/components/ui/checkbox"
 import { Field, FieldLabel } from "@/components/ui/field"
 import type { Todo } from "@/db/schema"
+import { toggleTodo } from "@/lib/actions"
 import { cn } from "@/lib/utils"
+import { useTransition } from "react"
+import { toast } from "sonner"
 
 type TodoItemProps = {
   todo: Todo
 }
 
 export default function TodoItem({ todo }: TodoItemProps) {
+  const toggleTodoWithId = toggleTodo.bind(null, todo.id)
+
+  const [isPending, startTransition] = useTransition()
+
+  function handleToggle(isChecked: boolean) {
+    startTransition(async () => {
+      const state = await toggleTodoWithId(isChecked)
+
+      if (state.error) {
+        toast.error(state.error)
+      }
+
+      if (state.message) {
+        toast.success(state.message)
+      }
+    })
+  }
+
   return (
     <li className="mx-2 my-4 rounded-sm bg-background/30">
       <Field orientation="horizontal">
@@ -15,6 +38,8 @@ export default function TodoItem({ todo }: TodoItemProps) {
           id={`todo-${todo.id}`}
           name={`todo-${todo.id}`}
           defaultChecked={todo.isCompleted}
+          disabled={isPending}
+          onCheckedChange={handleToggle}
           className="ms-4"
         />
         <FieldLabel

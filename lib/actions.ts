@@ -2,6 +2,7 @@
 
 import { db } from "@/db/drizzle"
 import { todos } from "@/db/schema"
+import { eq } from "drizzle-orm"
 import { revalidatePath } from "next/cache"
 
 export type State = {
@@ -23,5 +24,19 @@ export async function createTodo(prevState: State, formData: FormData) {
   } catch (error) {
     console.error("Database Error:", error)
     return { error: "Database Error: Failed to create Todo." }
+  }
+}
+
+export async function toggleTodo(
+  id: string,
+  isCompleted: boolean
+): Promise<State> {
+  try {
+    await db.update(todos).set({ isCompleted }).where(eq(todos.id, id))
+    revalidatePath("/")
+    return { message: "Todo toggled successfully" }
+  } catch (error) {
+    console.error("Database Error:", error)
+    return { error: "Database Error: Failed to toggle Todo." }
   }
 }
