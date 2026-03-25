@@ -1,4 +1,7 @@
 import { AddTodoForm } from "@/components/forms/add-todo-form"
+import { TodoListSkeleton } from "@/components/skeletons/todo-list-skeleton"
+import TodoList from "@/components/todo-list/todo-list"
+import { Suspense } from "react"
 
 export default function Page() {
   return (
@@ -9,6 +12,10 @@ export default function Page() {
         </h1>
 
         <AddTodoForm />
+
+        <Suspense fallback={<TodoListSkeleton />}>
+          <TodoList />
+        </Suspense>
       </main>
     </div>
   )

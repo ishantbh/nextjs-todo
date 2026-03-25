@@ -29,7 +29,7 @@ export function AddTodoForm() {
   }, [state])
 
   return (
-    <div className="mb-4 sm:mb-6">
+    <div className="mb-6 sm:mb-8">
       <form action={formAction}>
         <Field>
           <Field orientation="horizontal">
